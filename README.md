@@ -6,7 +6,7 @@
 # 后台管理
 社区管理委员会登陆系统，查看外来人员（如返京人员）返回报表，查看社区人员出入社区登记，查看访客登记，社区人员健康数据，即使发现有健康问题的人员，进行处理
 # 体验二维码
-![image](https://github.com/snowflake09/ncov2019/blob/master/img/NCOV2019.png)
+[https://github.com/snowflake09/ncov2019/blob/master/img/NCOV2019.png]
 # 联系我们
 个人微信 fangqikai0916
-![image](https://github.com/snowflake09/ncov2019/blob/master/img/wechat.jpeg)
+[https://github.com/snowflake09/ncov2019/blob/master/img/wechat.jpeg]
