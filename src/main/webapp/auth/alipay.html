@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null)
+				return unescape(r[2]);
+			return null;
+		}
+		window.onload = function() {
+			window.location.href = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id="+GetQueryString('appId')+"&scope=auth_base&redirect_uri=http://jxgezen.cn/clogin?deviceId="+GetQueryString('deviceId')+"&paymentMode="+GetQueryString('paymentMode');
+		}
+	</script>
+</body>
+</html>

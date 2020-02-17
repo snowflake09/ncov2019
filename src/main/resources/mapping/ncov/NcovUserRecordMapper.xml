@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ncov.NcovUserRecordMapper">
+    <resultMap id="ncovUserRecordEntityMap" type="com.model.ncov.NcovUserRecordEntity">
+            <result column="ID" property="ID"/>
+            <result column="USER_NAME" property="USERNAME"/>
+            <result column="AGE" property="AGE"/>
+            <result column="SEX" property="SEX"/>
+            <result column="TEMPERATURE" property="TEMPERATURE"/>
+            <result column="HEALTHY" property="HEALTHY"/>
+            <result column="HEALTH_NOTE" property="HEALTHNOTE"/>
+            <result column="REPORT_USER_ID" property="REPORTUSERID"/>
+            <result column="CREATE_USER" property="CREATEUSER"/>
+            <result column="CREATE_DATE" property="CREATEDATE"/>
+            <result column="UPDATE_DATE" property="UPDATEDATE"/>
+            <result column="UPDATE_USER" property="UPDATEUSER"/>
+        </resultMap>
+
+    <sql id="fields">
+        ID,USER_NAME,AGE,SEX,TEMPERATURE,HEALTHY,HEALTH_NOTE,REPORT_USER_ID,CREATE_USER,CREATE_DATE,UPDATE_DATE,UPDATE_USER
+    </sql>
+
+    <sql id="insertFields">
+        <trim suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="USERNAME != null">USER_NAME,</if>
+            <if test="AGE != null">AGE,</if>
+            <if test="SEX != null">SEX,</if>
+            <if test="TEMPERATURE != null">TEMPERATURE,</if>
+            <if test="HEALTHY != null">HEALTHY,</if>
+            <if test="HEALTHNOTE != null">HEALTH_NOTE,</if>
+            <if test="REPORTUSERID != null">REPORT_USER_ID,</if>
+            <if test="CREATEUSER != null">CREATE_USER,</if>
+            <if test="CREATEDATE != null">CREATE_DATE,</if>
+            <if test="UPDATEDATE != null">UPDATE_DATE,</if>
+            <if test="UPDATEUSER != null">UPDATE_USER,</if>
+        
+        </trim>
+    </sql>
+    <sql id="insertValues">
+        <trim suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="USERNAME != null">#{USERNAME},</if>
+            <if test="AGE != null">#{AGE},</if>
+            <if test="SEX != null">#{SEX},</if>
+            <if test="TEMPERATURE != null">#{TEMPERATURE},</if>
+            <if test="HEALTHY != null">#{HEALTHY},</if>
+            <if test="HEALTHNOTE != null">#{HEALTHNOTE},</if>
+            <if test="REPORTUSERID != null">#{REPORTUSERID},</if>
+            <if test="CREATEUSER != null">#{CREATEUSER},</if>
+            <if test="CREATEDATE != null">#{CREATEDATE},</if>
+            <if test="UPDATEDATE != null">#{UPDATEDATE},</if>
+            <if test="UPDATEUSER != null">#{UPDATEUSER},</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="conditionFields">
+        <trim prefixOverrides="AND">
+            <if test="ID != null">AND ID=#{ID}</if>
+            <if test="USERNAME != null">AND USER_NAME=#{USERNAME}</if>
+            <if test="AGE != null">AND AGE=#{AGE}</if>
+            <if test="SEX != null">AND SEX=#{SEX}</if>
+            <if test="TEMPERATURE != null">AND TEMPERATURE=#{TEMPERATURE}</if>
+            <if test="HEALTHY != null">AND HEALTHY=#{HEALTHY}</if>
+            <if test="HEALTHNOTE != null">AND HEALTH_NOTE=#{HEALTHNOTE}</if>
+            <if test="REPORTUSERID != null">AND REPORT_USER_ID=#{REPORTUSERID}</if>
+            <if test="CREATEUSER != null">AND CREATE_USER=#{CREATEUSER}</if>
+            <if test="CREATEDATE != null">AND CREATE_DATE=#{CREATEDATE}</if>
+            <if test="UPDATEDATE != null">AND UPDATE_DATE=#{UPDATEDATE}</if>
+            <if test="UPDATEUSER != null">AND UPDATE_USER=#{UPDATEUSER}</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="updateFields">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="ID != null">ID=#{ID},</if>
+                <if test="USERNAME != null">USER_NAME=#{USERNAME},</if>
+                <if test="AGE != null">AGE=#{AGE},</if>
+                <if test="SEX != null">SEX=#{SEX},</if>
+                <if test="TEMPERATURE != null">TEMPERATURE=#{TEMPERATURE},</if>
+                <if test="HEALTHY != null">HEALTHY=#{HEALTHY},</if>
+                <if test="HEALTHNOTE != null">HEALTH_NOTE=#{HEALTHNOTE},</if>
+                <if test="REPORTUSERID != null">REPORT_USER_ID=#{REPORTUSERID},</if>
+                <if test="CREATEUSER != null">CREATE_USER=#{CREATEUSER},</if>
+                <if test="CREATEDATE != null">CREATE_DATE=#{CREATEDATE},</if>
+                <if test="UPDATEDATE != null">UPDATE_DATE=#{UPDATEDATE},</if>
+                <if test="UPDATEUSER != null">UPDATE_USER=#{UPDATEUSER},</if>
+            
+            </trim>
+        </set>
+    </sql>
+
+
+    
+    <select id="getByCondition" parameterType="Object" resultMap="ncovUserRecordEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_user_record WHERE <include refid="conditionFields"/>
+    </select>
+        
+    <select id="getByID" parameterType="Object" resultMap="ncovUserRecordEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_user_record WHERE ID=#{ID}
+    </select>
+        
+    <insert id="insert" parameterType="Object" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO ncov_user_record(<include refid="insertFields"/>) VALUES(<include refid="insertValues"/>)
+    </insert>
+        
+    <update id="updateById" parameterType="Object">
+        UPDATE ncov_user_record <include refid="updateFields"/> WHERE ID=#{ID}
+    </update>
+    <select id="getCount" parameterType="Object" resultType="Long">
+        select count(id) from ncov_user_record
+    </select>
+    <select id="searchPage" parameterType="com.condition.ncov.NcovUserRecordCondition" resultMap="ncovUserRecordEntityMap">
+        select
+        r.ID,r.USER_NAME,r.AGE,r.SEX,r.TEMPERATURE,r.HEALTHY,r.HEALTH_NOTE,r.REPORT_USER_ID,r.CREATE_USER,r.CREATE_DATE,r.UPDATE_DATE,r.UPDATE_USER
+        from ncov_user_record r,ncov_users u,ncov_region g
+        <where>
+            r.report_user_id = u.id
+            and u.region_id = g.id
+            <if test="sessionid!=null and sessionid!='' and sessionid!=1">and g.MANAGE_ID = #{sessionid}</if>
+            <if test="USERNAME!=null and USERNAME!=''">and u.NAME like "%"#{USERNAME}"%"</if>
+            <if test="PHONE!=null and PHONE!=''">and u.PHONE like #{PHONE}"%"</if>
+            <if test="CARDNO!=null and CARDNO!=''">and u.CARD_NO like #{CARDNO}"%"</if>
+            <if test="REGIONADDRESS!=null and REGIONADDRESS!=''">and REGION_ADDRESS like "%"#{REGIONADDRESS}"%"</if>
+            <if test="TEMPERATURE!=null and TEMPERATURE!=''">and r.TEMPERATURE > #{TEMPERATURE}</if>
+            <if test="HEALTHY!=null and HEALTHY!=''">and r.HEALTHY = #{HEALTHY}</if>
+            <if test="startDayTime!=null and startDayTime!=''">
+
+                and DATE_FORMAT(r.CREATE_DATE, '%Y-%m-%d') &gt;= #{startDayTime}
+            </if>
+            <if test="endDayTime!=null and endDayTime!=''">
+                and DATE_FORMAT(r.CREATE_DATE, '%Y-%m-%d') &lt;= #{endDayTime}
+            </if>
+        </where>
+        order by r.id desc
+        limit #{offset},#{rows}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ncov_user_record
+    where ID = #{id,jdbcType=BIGINT}
+    </delete>
+</mapper>

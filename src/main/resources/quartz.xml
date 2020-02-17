@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.0.xsd　
+	">
+	
+	<!-- 线程执行器配置，用于任务注册 -->
+	<bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	    <property name="corePoolSize" value="10" />
+	    <property name="maxPoolSize" value="100" />
+	    <property name="queueCapacity" value="500" />
+	</bean>
+	<!--要调度的对象-->
+	<bean id="jobDay" class="com.task.DayTask" />
+	<bean id="jobWeChat" class="com.task.WeChatTask" />
+	<bean id="jobDevice" class="com.task.DeviceTask" />
+	<!-- 调度业务 -->
+	<bean id="dayDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="jobDay" />
+		<property name="targetMethod" value="dayTask" />
+		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="weChatDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="jobWeChat" />
+		<property name="targetMethod" value="tokenTask" />
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="deviceSendEndDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="jobDevice" />
+		<property name="targetMethod" value="deviceSendEndTask" />
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="deviceSendVerifyDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="jobDevice" />
+		<property name="targetMethod" value="deviceSendVerifyTask" />
+		<property name="concurrent" value="false"/>
+	</bean>
+ 	<!-- 调度触发器 -->
+	<bean id="dayTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="dayDetail" />
+		<!--表达式，每天凌晨00：00：01秒执行一次-->
+		<property name="cronExpression" value="1 0 0 * * ?" />
+	</bean>
+	<bean id="weChatTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="weChatDetail" />
+		<property name="startDelay" value="5000" />
+		<!--每 7000s 执行一次-->
+		<property name="repeatInterval" value="7000000" />
+	</bean>
+ 	<bean id="deviceSendEndTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="deviceSendEndDetail" />
+		<property name="startDelay" value="5000" />
+		<!--每 300s 执行一次-->
+		<property name="repeatInterval" value="300000"/>
+	</bean>
+	<bean id="deviceSendVerifyTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="deviceSendVerifyDetail" />
+		<!--每60s 执行一次-->
+		<property name="repeatInterval" value="60000" />
+	</bean>
+	<!--  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序   -->
+	<bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" >
+		<property name="triggers">
+			<list>
+				<!--作业调度器,list下可加入其他的调度器-->
+				<ref bean="dayTrigger" />
+				<ref bean="deviceSendEndTrigger" />
+				<ref bean="deviceSendVerifyTrigger" />
+				<!-- <ref bean="weChatTrigger" /> -->
+			</list>
+		</property>
+	</bean>
+
+</beans>

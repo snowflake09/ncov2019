@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ncov.NcovUsersMapper">
+    <resultMap id="ncovUsersEntityMap" type="com.model.ncov.NcovUsersEntity">
+            <result column="ID" property="ID"/>
+            <result column="WECHAT_ID" property="WECHATID"/>
+            <result column="NAME" property="NAME"/>
+            <result column="PHONE" property="PHONE"/>
+            <result column="CARD_NO" property="CARDNO"/>
+            <result column="AGE" property="AGE"/>
+            <result column="SEX" property="SEX"/>
+            <result column="PROVINCE_NAME" property="PROVINCENAME"/>
+            <result column="CITY_NAME" property="CITYNAME"/>
+            <result column="AREA_NAME" property="AREANAME"/>
+            <result column="USER_TYPE" property="USERTYPE"/>
+            <result column="REGION_ID" property="REGIONID"/>
+            <result column="REGION_ADDRESS" property="REGIONADDRESS"/>
+            <result column="TEMPERATURE" property="TEMPERATURE"/>
+            <result column="HEALTHY" property="HEALTHY"/>
+            <result column="HEALTH_NOTE" property="HEALTHNOTE"/>
+            <result column="CAR_NO" property="CARNO"/>
+            <result column="TRIP_NO" property="TRIPNO"/>
+            <result column="DOG" property="DOG"/>
+            <result column="REASON" property="REASON"/>
+            <result column="USER_STATUS" property="USERSTATUS"/>
+            <result column="CREATE_DATE" property="CREATEDATE"/>
+            <result column="CREATE_USER" property="CREATEUSER"/>
+            <result column="UPDATE_DATE" property="UPDATEDATE"/>
+            <result column="UPDATE_USER" property="UPDATEUSER"/>
+        </resultMap>
+
+    <sql id="fields">
+        ID,WECHAT_ID,NAME,PHONE,CARD_NO,AGE,SEX,PROVINCE_NAME,CITY_NAME,AREA_NAME,USER_TYPE,REGION_ID,REGION_ADDRESS,TEMPERATURE,HEALTHY,HEALTH_NOTE,CAR_NO,TRIP_NO,DOG,REASON,USER_STATUS,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER
+    </sql>
+
+    <sql id="insertFields">
+        <trim suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="WECHATID != null">WECHAT_ID,</if>
+            <if test="NAME != null">NAME,</if>
+            <if test="PHONE != null">PHONE,</if>
+            <if test="CARDNO != null">CARD_NO,</if>
+            <if test="AGE != null">AGE,</if>
+            <if test="SEX != null">SEX,</if>
+            <if test="PROVINCENAME != null">PROVINCE_NAME,</if>
+            <if test="CITYNAME != null">CITY_NAME,</if>
+            <if test="AREANAME != null">AREA_NAME,</if>
+            <if test="USERTYPE != null">USER_TYPE,</if>
+            <if test="REGIONID != null">REGION_ID,</if>
+            <if test="REGIONADDRESS != null">REGION_ADDRESS,</if>
+            <if test="TEMPERATURE != null">TEMPERATURE,</if>
+            <if test="HEALTHY != null">HEALTHY,</if>
+            <if test="HEALTHNOTE != null">HEALTH_NOTE,</if>
+            <if test="CARNO != null">CAR_NO,</if>
+            <if test="TRIPNO != null">TRIP_NO,</if>
+            <if test="DOG != null">DOG,</if>
+            <if test="REASON != null">REASON,</if>
+            <if test="USERSTATUS != null">USER_STATUS,</if>
+            <if test="CREATEDATE != null">CREATE_DATE,</if>
+            <if test="CREATEUSER != null">CREATE_USER,</if>
+            <if test="UPDATEDATE != null">UPDATE_DATE,</if>
+            <if test="UPDATEUSER != null">UPDATE_USER,</if>
+        
+        </trim>
+    </sql>
+    <sql id="insertValues">
+        <trim suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="WECHATID != null">#{WECHATID},</if>
+            <if test="NAME != null">#{NAME},</if>
+            <if test="PHONE != null">#{PHONE},</if>
+            <if test="CARDNO != null">#{CARDNO},</if>
+            <if test="AGE != null">#{AGE},</if>
+            <if test="SEX != null">#{SEX},</if>
+            <if test="PROVINCENAME != null">#{PROVINCENAME},</if>
+            <if test="CITYNAME != null">#{CITYNAME},</if>
+            <if test="AREANAME != null">#{AREANAME},</if>
+            <if test="USERTYPE != null">#{USERTYPE},</if>
+            <if test="REGIONID != null">#{REGIONID},</if>
+            <if test="REGIONADDRESS != null">#{REGIONADDRESS},</if>
+            <if test="TEMPERATURE != null">#{TEMPERATURE},</if>
+            <if test="HEALTHY != null">#{HEALTHY},</if>
+            <if test="HEALTHNOTE != null">#{HEALTHNOTE},</if>
+            <if test="CARNO != null">#{CARNO},</if>
+            <if test="TRIPNO != null">#{TRIPNO},</if>
+            <if test="DOG != null">#{DOG},</if>
+            <if test="REASON != null">#{REASON},</if>
+            <if test="USERSTATUS != null">#{USERSTATUS},</if>
+            <if test="CREATEDATE != null">#{CREATEDATE},</if>
+            <if test="CREATEUSER != null">#{CREATEUSER},</if>
+            <if test="UPDATEDATE != null">#{UPDATEDATE},</if>
+            <if test="UPDATEUSER != null">#{UPDATEUSER},</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="conditionFields">
+        <trim prefixOverrides="AND">
+            <if test="ID != null">AND ID=#{ID}</if>
+            <if test="WECHATID != null">AND WECHAT_ID=#{WECHATID}</if>
+            <if test="NAME != null">AND NAME=#{NAME}</if>
+            <if test="PHONE != null">AND PHONE=#{PHONE}</if>
+            <if test="CARDNO != null">AND CARD_NO=#{CARDNO}</if>
+            <if test="AGE != null">AND AGE=#{AGE}</if>
+            <if test="SEX != null">AND SEX=#{SEX}</if>
+            <if test="PROVINCENAME != null">AND PROVINCE_NAME=#{PROVINCENAME}</if>
+            <if test="CITYNAME != null">AND CITY_NAME=#{CITYNAME}</if>
+            <if test="AREANAME != null">AND AREA_NAME=#{AREANAME}</if>
+            <if test="USERTYPE != null">AND USER_TYPE=#{USERTYPE}</if>
+            <if test="REGIONID != null">AND REGION_ID=#{REGIONID}</if>
+            <if test="REGIONADDRESS != null">AND REGION_ADDRESS=#{REGIONADDRESS}</if>
+            <if test="TEMPERATURE != null">AND TEMPERATURE=#{TEMPERATURE}</if>
+            <if test="HEALTHY != null">AND HEALTHY=#{HEALTHY}</if>
+            <if test="HEALTHNOTE != null">AND HEALTH_NOTE=#{HEALTHNOTE}</if>
+            <if test="CARNO != null">AND CAR_NO=#{CARNO},</if>
+            <if test="TRIPNO != null">AND TRIP_NO=#{TRIPNO},</if>
+            <if test="DOG != null">AND DOG=#{DOG},</if>
+            <if test="REASON != null">AND REASON=#{#{REASON},</if>
+            <if test="USERSTATUS != null">AND USER_STATUS=#{USERSTATUS}</if>
+            <if test="CREATEDATE != null">AND CREATE_DATE=#{CREATEDATE}</if>
+            <if test="CREATEUSER != null">AND CREATE_USER=#{CREATEUSER}</if>
+            <if test="UPDATEDATE != null">AND UPDATE_DATE=#{UPDATEDATE}</if>
+            <if test="UPDATEUSER != null">AND UPDATE_USER=#{UPDATEUSER}</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="updateFields">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="ID != null">ID=#{ID},</if>
+                <if test="WECHATID != null">WECHAT_ID=#{WECHATID},</if>
+                <if test="NAME != null">NAME=#{NAME},</if>
+                <if test="PHONE != null">PHONE=#{PHONE},</if>
+                <if test="CARDNO != null">CARD_NO=#{CARDNO},</if>
+                <if test="AGE != null">AGE=#{AGE},</if>
+                <if test="SEX != null">SEX=#{SEX},</if>
+                <if test="PROVINCENAME != null">PROVINCE_NAME=#{PROVINCENAME},</if>
+                <if test="CITYNAME != null">CITY_NAME=#{CITYNAME},</if>
+                <if test="AREANAME != null">AREA_NAME=#{AREANAME},</if>
+                <if test="USERTYPE != null">USER_TYPE=#{USERTYPE},</if>
+                <if test="REGIONID != null">REGION_ID=#{REGIONID},</if>
+                <if test="REGIONADDRESS != null">REGION_ADDRESS=#{REGIONADDRESS},</if>
+                <if test="TEMPERATURE != null">TEMPERATURE=#{TEMPERATURE},</if>
+                <if test="HEALTHY != null">HEALTHY=#{HEALTHY},</if>
+                <if test="HEALTHNOTE != null">HEALTH_NOTE=#{HEALTHNOTE},</if>
+                <if test="CARNO != null">CAR_NO=#{CARNO},</if>
+                <if test="TRIPNO != null">TRIP_NO=#{TRIPNO},</if>
+                <if test="DOG != null">DOG=#{DOG},</if>
+                <if test="REASON != null">REASON=#{#{REASON},</if>
+                <if test="USERSTATUS != null">USER_STATUS=#{USERSTATUS},</if>
+                <if test="CREATEDATE != null">CREATE_DATE=#{CREATEDATE},</if>
+                <if test="CREATEUSER != null">CREATE_USER=#{CREATEUSER},</if>
+                <if test="UPDATEDATE != null">UPDATE_DATE=#{UPDATEDATE},</if>
+                <if test="UPDATEUSER != null">UPDATE_USER=#{UPDATEUSER},</if>
+            
+            </trim>
+        </set>
+    </sql>
+
+
+    
+    <select id="getByCondition" parameterType="Object" resultMap="ncovUsersEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_users WHERE <include refid="conditionFields"/>
+    </select>
+        
+    <select id="getByID" parameterType="Object" resultMap="ncovUsersEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_users WHERE ID=#{ID}
+    </select>
+
+    <select id="findByWechatId" parameterType="Object" resultMap="ncovUsersEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_users WHERE USER_TYPE = 1 and WECHAT_ID=#{id} order by id desc limit 0 ,1
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Object" resultMap="ncovUsersEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_users WHERE ID=#{ID}
+    </select>
+
+    <insert id="insert" parameterType="Object" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO ncov_users(<include refid="insertFields"/>) VALUES(<include refid="insertValues"/>)
+    </insert>
+        
+    <update id="updateById" parameterType="Object">
+        UPDATE ncov_users <include refid="updateFields"/> WHERE ID=#{ID}
+    </update>
+    <select id="getCount" parameterType="com.condition.ncov.NcovUsersCondition" resultType="Long">
+        select count(id) from ncov_users
+        <where>
+            <if test="WECHATID!=null ">
+                and WECHAT_ID = #{WECHATID}
+            </if>
+            <if test="REGIONID!=null ">
+                and REGION_ID = #{REGIONID}
+            </if>
+            <if test="CARDNO!=null ">
+                and CARD_NO = #{CARDNO}
+            </if>
+            <if test="USERTYPE!=null ">
+                and USER_TYPE = #{USERTYPE}
+            </if>
+        </where>
+    </select>
+    <select id="searchPage" parameterType="com.condition.ncov.NcovUsersCondition" resultMap="ncovUsersEntityMap">
+        select
+        u.*
+        from ncov_users u
+        LEFT JOIN ncov_region r ON u.REGION_ID = r.ID
+        <where>
+            <if test="sessionid!=null and sessionid!='' and sessionid!=1">and r.MANAGE_ID = #{sessionid}</if>
+            <if test="NAME!=null and NAME!=''">and u.NAME like "%"#{NAME}"%"</if>
+            <if test="PHONE!=null and PHONE!=''">and u.PHONE like #{PHONE}"%"</if>
+            <if test="REGIONADDRESS!=null and REGIONADDRESS!=''">and u.REGION_ADDRESS like "%"#{REGIONADDRESS}"%"</if>
+            <if test="USERTYPE!=null and USERTYPE!=''">and u.USER_TYPE = #{USERTYPE}</if>
+            <if test="CARDNO!=null and CARDNO!=''">and u.CARD_NO like #{CARDNO}"%"</if>
+            <if test="SEX!=null and SEX!=''">and u.SEX = #{SEX}</if>
+            <if test="HEALTHY!=null and HEALTHY!=''">and u.HEALTHY = #{HEALTHY}</if>
+            <if test="TEMPERATURE!=null and TEMPERATURE!=''">and u.TEMPERATURE > #{TEMPERATURE}</if>
+            <if test="startDayTime!=null and startDayTime!=''">
+                and DATE_FORMAT(u.CREATE_DATE, '%Y-%m-%d') >= #{startDayTime}
+            </if>
+            <if test="endDayTime!=null and endDayTime!=''">
+                and DATE_FORMAT(u.CREATE_DATE, '%Y-%m-%d') &lt;= #{endDayTime}
+            </if>
+        </where>
+        order by u.id desc
+        limit #{offset},#{rows}
+    </select>
+    <select id="searchPageNo" parameterType="com.condition.ncov.NcovUsersCondition" resultMap="ncovUsersEntityMap">
+        select
+        u.*
+        from ncov_users u
+        LEFT JOIN ncov_region r ON u.REGION_ID = r.ID
+        <where>
+            <if test="sessionid!=null and sessionid!='' and sessionid!=1">and r.MANAGE_ID = #{sessionid}</if>
+            <if test="NAME!=null and NAME!=''">and u.NAME like "%"#{NAME}"%"</if>
+            <if test="PHONE!=null and PHONE!=''">and u.PHONE like #{PHONE}"%"</if>
+            <if test="REGIONADDRESS!=null and REGIONADDRESS!=''">and u.REGION_ADDRESS like "%"#{REGIONADDRESS}"%"</if>
+            <if test="USERTYPE!=null and USERTYPE!=''">and u.USER_TYPE = #{USERTYPE}</if>
+            <if test="CARDNO!=null and CARDNO!=''">and u.CARD_NO like #{CARDNO}"%"</if>
+            <if test="SEX!=null and SEX!=''">and u.SEX = #{SEX}</if>
+            <if test="HEALTHY!=null and HEALTHY!=''">and u.HEALTHY = #{HEALTHY}</if>
+            <choose>
+            <when test="startDayTime!=null and startDayTime!=''">
+                and DATE_FORMAT(u.UPDATE_DATE, '%Y-%m-%d') &lt;= #{startDayTime}
+            </when>
+            <otherwise>
+                and u.UPDATE_DATE &lt;= DATE_SUB(NOW(),INTERVAL 1 DAY)
+            </otherwise>
+            </choose>
+        </where>
+        order by id desc
+        limit #{offset},#{rows}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ncov_users
+    where ID = #{id,jdbcType=BIGINT}
+    </delete>
+</mapper>

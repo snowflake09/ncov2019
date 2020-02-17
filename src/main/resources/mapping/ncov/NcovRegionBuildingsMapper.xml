@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ncov.NcovRegionBuildingsMapper">
+    <resultMap id="ncovRegionBuildingsEntityMap" type="com.model.ncov.NcovRegionBuildingsEntity">
+            <result column="ID" property="ID"/>
+            <result column="BUILDING_NAME" property="BUILDINGNAME"/>
+            <result column="MANAGER_NAME" property="MANAGERNAME"/>
+            <result column="MANAGER_PHONE" property="MANAGERPHONE"/>
+            <result column="REGION_ID" property="REGIONID"/>
+            <result column="STATUS" property="STATUS"/>
+            <result column="CREATE_USER" property="CREATEUSER"/>
+            <result column="CREATE_TIME" property="CREATETIME"/>
+            <result column="UPDATE_USER" property="UPDATEUSER"/>
+            <result column="UPDATE_TIME" property="UPDATETIME"/>
+        </resultMap>
+
+    <sql id="fields">
+        ID,BUILDING_NAME,MANAGER_NAME,MANAGER_PHONE,REGION_ID,STATUS,CREATE_USER,CREATE_TIME,UPDATE_USER,UPDATE_TIME
+    </sql>
+
+    <sql id="insertFields">
+        <trim suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="BUILDINGNAME != null">BUILDING_NAME,</if>
+            <if test="MANAGERNAME != null">MANAGER_NAME,</if>
+            <if test="MANAGERPHONE != null">MANAGER_PHONE,</if>
+            <if test="REGIONID != null">REGION_ID,</if>
+            <if test="STATUS != null">STATUS,</if>
+            <if test="CREATEUSER != null">CREATE_USER,</if>
+            <if test="CREATETIME != null">CREATE_TIME,</if>
+            <if test="UPDATEUSER != null">UPDATE_USER,</if>
+            <if test="UPDATETIME != null">UPDATE_TIME,</if>
+        
+        </trim>
+    </sql>
+    <sql id="insertValues">
+        <trim suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="BUILDINGNAME != null">#{BUILDINGNAME},</if>
+            <if test="MANAGERNAME != null">#{MANAGERNAME},</if>
+            <if test="MANAGERPHONE != null">#{MANAGERPHONE},</if>
+            <if test="REGIONID != null">#{REGIONID},</if>
+            <if test="STATUS != null">#{STATUS},</if>
+            <if test="CREATEUSER != null">#{CREATEUSER},</if>
+            <if test="CREATETIME != null">#{CREATETIME},</if>
+            <if test="UPDATEUSER != null">#{UPDATEUSER},</if>
+            <if test="UPDATETIME != null">#{UPDATETIME},</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="conditionFields">
+        <trim prefixOverrides="AND">
+            <if test="ID != null">AND ID=#{ID}</if>
+            <if test="BUILDINGNAME != null">AND BUILDING_NAME=#{BUILDINGNAME}</if>
+            <if test="MANAGERNAME != null">AND MANAGER_NAME=#{MANAGERNAME}</if>
+            <if test="MANAGERPHONE != null">AND MANAGER_PHONE=#{MANAGERPHONE}</if>
+            <if test="REGIONID != null">AND REGION_ID=#{REGIONID}</if>
+            <if test="STATUS != null">AND STATUS=#{STATUS}</if>
+            <if test="CREATEUSER != null">AND CREATE_USER=#{CREATEUSER}</if>
+            <if test="CREATETIME != null">AND CREATE_TIME=#{CREATETIME}</if>
+            <if test="UPDATEUSER != null">AND UPDATE_USER=#{UPDATEUSER}</if>
+            <if test="UPDATETIME != null">AND UPDATE_TIME=#{UPDATETIME}</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="updateFields">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="ID != null">ID=#{ID},</if>
+                <if test="BUILDINGNAME != null">BUILDING_NAME=#{BUILDINGNAME},</if>
+                <if test="MANAGERNAME != null">MANAGER_NAME=#{MANAGERNAME},</if>
+                <if test="MANAGERPHONE != null">MANAGER_PHONE=#{MANAGERPHONE},</if>
+                <if test="REGIONID != null">REGION_ID=#{REGIONID},</if>
+                <if test="STATUS != null">STATUS=#{STATUS},</if>
+                <if test="CREATEUSER != null">CREATE_USER=#{CREATEUSER},</if>
+                <if test="CREATETIME != null">CREATE_TIME=#{CREATETIME},</if>
+                <if test="UPDATEUSER != null">UPDATE_USER=#{UPDATEUSER},</if>
+                <if test="UPDATETIME != null">UPDATE_TIME=#{UPDATETIME},</if>
+            
+            </trim>
+        </set>
+    </sql>
+
+
+    
+    <select id="getByCondition" parameterType="Object" resultMap="ncovRegionBuildingsEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region_buildings WHERE <include refid="conditionFields"/>
+    </select>
+
+    <select id="getBuildingsList" parameterType="Object" resultMap="ncovRegionBuildingsEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region_buildings
+    </select>
+
+    <select id="getByID" parameterType="Object" resultMap="ncovRegionBuildingsEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region_buildings WHERE ID=#{ID}
+    </select>
+        
+    <insert id="insert" parameterType="Object" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO ncov_region_buildings(<include refid="insertFields"/>) VALUES(<include refid="insertValues"/>)
+    </insert>
+        
+    <update id="updateById" parameterType="Object">
+        UPDATE ncov_region_buildings <include refid="updateFields"/> WHERE ID=#{ID}
+    </update>
+    <select id="getCount" parameterType="Object" resultType="Long">
+        select count(id) from ncov_region_buildings
+    </select>
+    <select id="searchPage" parameterType="com.condition.ncov.NcovBuildingCondition" resultMap="ncovRegionBuildingsEntityMap">
+        select
+
+        u.ID,u.BUILDING_NAME,u.MANAGER_NAME,u.MANAGER_PHONE,u.REGION_ID,u.STATUS,u.CREATE_USER,u.CREATE_TIME,u.UPDATE_USER,u.UPDATE_TIME
+        from ncov_region_buildings u
+        LEFT JOIN ncov_region r ON u.REGION_ID = r.ID
+        <where>
+            <if test="sessionid!=null and sessionid!='' and sessionid!=1" >and r.MANAGE_ID = #{sessionid}</if>
+            <if test="name!=null and name!=''">and u.BUILDING_NAME like "%"#{name}"%"</if>
+            <if test="managename!=null and managename!=''">and u.MANAGER_NAME like "%"#{managename}"%"</if>
+        </where>
+        order by u.id desc
+        limit #{offset},#{rows}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ncov_region_buildings
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

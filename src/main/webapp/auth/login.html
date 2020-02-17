@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null)
+				return unescape(r[2]);
+			return null;
+		}
+		window.onload = function() {
+			/*window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+					+ GetQueryString('appId')
+					+ "&redirect_uri=http://jxgezen.cn/clogin?deviceId="
+					+ GetQueryString('deviceId')
+					+ "%26paymentMode="
+					+ GetQueryString('paymentMode')
+					+ "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";*/
+
+			window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+					+ GetQueryString('appId')
+					+ "&redirect_uri=http://gezen.51youduoduo.com/ncov2020/ncov/web/index?regionid="
+					+ GetQueryString('regionid')
+					+ "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+		}
+	</script>
+</body>
+</html>

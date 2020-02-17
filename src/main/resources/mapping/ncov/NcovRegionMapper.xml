@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ncov.NcovRegionMapper">
+    <resultMap id="ncovRegionEntityMap" type="com.model.ncov.NcovRegionEntity">
+            <result column="ID" property="ID"/>
+            <result column="NAME" property="NAME"/>
+            <result column="ADDRESS" property="ADDRESS"/>
+            <result column="MANAGE_ID" property="MANAGEID"/>
+            <result column="MANAGE_NAME" property="MANAGENAME"/>
+            <result column="Region_Qr_Path" property="REGIONQRPATH"/>
+            <result column="CODE" property="CODE"/>
+            <result column="STATUS" property="STATUS"/>
+            <result column="CREATE_DATE" property="CREATEDATE"/>
+            <result column="CREATE_USER" property="CREATEUSER"/>
+            <result column="UPDATE_DATE" property="UPDATEDATE"/>
+            <result column="UPDATE_USER" property="UPDATEUSER"/>
+        </resultMap>
+
+    <sql id="fields">
+        ID,NAME,ADDRESS,MANAGE_ID,MANAGE_NAME,Region_Qr_Path,CODE,STATUS,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER
+    </sql>
+
+    <sql id="insertFields">
+        <trim suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="NAME != null">NAME,</if>
+            <if test="ADDRESS != null">ADDRESS,</if>
+            <if test="MANAGEID != null">MANAGE_ID,</if>
+            <if test="MANAGENAME != null">MANAGE_NAME,</if>
+            <if test="REGIONQRPATH != null">Region_Qr_Path,</if>
+            <if test="CODE != null">CODE,</if>
+            <if test="STATUS != null">STATUS,</if>
+            <if test="CREATEDATE != null">CREATE_DATE,</if>
+            <if test="CREATEUSER != null">CREATE_USER,</if>
+            <if test="UPDATEDATE != null">UPDATE_DATE,</if>
+            <if test="UPDATEUSER != null">UPDATE_USER,</if>
+        
+        </trim>
+    </sql>
+    <sql id="insertValues">
+        <trim suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="NAME != null">#{NAME},</if>
+            <if test="ADDRESS != null">#{ADDRESS},</if>
+            <if test="MANAGEID != null">#{MANAGEID},</if>
+            <if test="MANAGENAME != null">#{MANAGENAME},</if>
+            <if test="REGIONQRPATH != null">#{REGIONQRPATH},</if>
+            <if test="CODE != null">#{CODE},</if>
+            <if test="STATUS != null">#{STATUS},</if>
+            <if test="CREATEDATE != null">#{CREATEDATE},</if>
+            <if test="CREATEUSER != null">#{CREATEUSER},</if>
+            <if test="UPDATEDATE != null">#{UPDATEDATE},</if>
+            <if test="UPDATEUSER != null">#{UPDATEUSER},</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="conditionFields">
+        <trim prefixOverrides="AND">
+            <if test="ID != null">AND ID=#{ID}</if>
+            <if test="NAME != null">AND NAME=#{NAME}</if>
+            <if test="ADDRESS != null">AND ADDRESS=#{ADDRESS}</if>
+            <if test="MANAGEID != null">AND MANAGE_ID=#{MANAGEID}</if>
+            <if test="MANAGENAME != null">AND MANAGE_NAME=#{MANAGENAME}</if>
+            <if test="REGIONQRPATH != null">AND Region_Qr_Path = #{REGIONQRPATH}</if>
+            <if test="CODE != null">AND CODE = #{CODE}</if>
+            <if test="STATUS != null">AND STATUS=#{STATUS}</if>
+            <if test="CREATEDATE != null">AND CREATE_DATE=#{CREATEDATE}</if>
+            <if test="CREATEUSER != null">AND CREATE_USER=#{CREATEUSER}</if>
+            <if test="UPDATEDATE != null">AND UPDATE_DATE=#{UPDATEDATE}</if>
+            <if test="UPDATEUSER != null">AND UPDATE_USER=#{UPDATEUSER}</if>
+        
+        </trim>
+    </sql>
+
+    <sql id="updateFields">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="ID != null">ID=#{ID},</if>
+                <if test="NAME != null">NAME=#{NAME},</if>
+                <if test="ADDRESS != null">ADDRESS=#{ADDRESS},</if>
+                <if test="MANAGEID != null">MANAGE_ID=#{MANAGEID},</if>
+                <if test="MANAGENAME != null">MANAGE_NAME=#{MANAGENAME},</if>
+                <if test="REGIONQRPATH != null">AND Region_Qr_Path = #{REGIONQRPATH},</if>
+                <if test="CODE != null">AND CODE = #{CODE},</if>
+                <if test="STATUS != null">STATUS=#{STATUS},</if>
+                <if test="CREATEDATE != null">CREATE_DATE=#{CREATEDATE},</if>
+                <if test="CREATEUSER != null">CREATE_USER=#{CREATEUSER},</if>
+                <if test="UPDATEDATE != null">UPDATE_DATE=#{UPDATEDATE},</if>
+                <if test="UPDATEUSER != null">UPDATE_USER=#{UPDATEUSER},</if>
+            
+            </trim>
+        </set>
+    </sql>
+    
+    <select id="getByCondition" parameterType="Object" resultMap="ncovRegionEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region WHERE <include refid="conditionFields"/>
+    </select>
+        
+    <select id="getByID" parameterType="Object" resultMap="ncovRegionEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region WHERE ID=#{ID}
+    </select>
+
+    <select id="getByCode" parameterType="Object" resultMap="ncovRegionEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region WHERE code=#{code}
+    </select>
+
+    <insert id="insert" parameterType="Object" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO ncov_region(<include refid="insertFields"/>) VALUES(<include refid="insertValues"/>)
+    </insert>
+        
+    <update id="updateById" parameterType="Object">
+        UPDATE ncov_region <include refid="updateFields"/> WHERE ID=#{ID}
+    </update>
+    <select id="getCount" parameterType="Object" resultType="Long">
+        select count(id) from ncov_region
+    </select>
+    <select id="getIds" parameterType="Object" resultType="Long">
+        select id from ncov_region where manage_id = #{sessionid}
+    </select>
+    <select id="searchPage" parameterType="com.condition.ncov.NcovRegionCondition" resultMap="ncovRegionEntityMap">
+        select
+        <include refid="fields" />
+        from ncov_region
+        <where>
+            <if test="sessionid!=null and sessionid!='' and sessionid!=1">and MANAGE_ID = #{sessionid}</if>
+            <if test="name!=null and name!=''">and NAME like "%"#{name}"%"</if>
+            <if test="managename!=null and managename!=''">and MANAGE_NAME like "%"#{managename}"%"</if>
+        </where>
+        order by id desc
+        limit #{offset},#{rows}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ncov_region
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+    <select id="getRegionList" parameterType="Object" resultMap="ncovRegionEntityMap">
+        SELECT <include refid="fields"/> FROM ncov_region
+    </select>
+</mapper>
